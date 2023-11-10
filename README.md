@@ -1,5 +1,5 @@
 # Flow Launcher Obsidian Omnisearch 
-[Flow Launcher](https://www.flowlauncher.com/) Plugin that uses the [Omnisearch](https://github.com/scambier/obsidian-omnisearch) HTTP server to search Obsidian.md Notes 
+[Flow Launcher](https://www.flowlauncher.com/) Plugin that uses the [Omnisearch](https://github.com/scambier/obsidian-omnisearch) HTTP server to search your [Obsidian.md](https://obsidian.md/) Notes
 
 # Usage
 - #1 Install and configure Omnisearch on Obsidian.md 
