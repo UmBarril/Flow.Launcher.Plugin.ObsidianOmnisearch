@@ -5,6 +5,5 @@
 - #1 Install and configure Omnisearch on Obsidian.md 
   - Install it through the [official plugin repository](https://obsidian.md/plugins?search=Omnisearch)
   - Go to Settings > Omnisearch > API Access Through HTTP > Enable the HTTP Server
-  - Also on the same section, choose a HTTP Port (or use the default one)
 - #2 Install the Flow Launcher Obsidian Omnisearch Plugin
-  - Download the Latest Package and unzip it on %AppData%\FlowLauncher\Plugins  
+  - Download the Latest Package and unzip it on %AppData%\FlowLauncher\Plugins
