@@ -1,0 +1,32 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net7.0-windows</TargetFramework>
+	<UseWpf>True</UseWpf>
+    <AssemblyName>Flow.Launcher.Plugin.ObsidianOmnisearch</AssemblyName>
+    <PackageId>Flow.Launcher.Plugin.ObsidianOmnisearch</PackageId>
+    <Authors>UmBarril</Authors>
+    <PackageProjectUrl>https://github.com/UmBarril/Flow.Launcher.Plugin.ObsidianOmnisearch</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/UmBarril/Flow.Launcher.Plugin.ObsidianOmnisearch</RepositoryUrl>
+    <PackageTags>flow-launcher flow-plugin</PackageTags>
+    <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DebugSymbols>false</DebugSymbols>
+    <DebugType>None</DebugType>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Content Include="plugin.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Flow.Launcher.Plugin" Version="4.1.0" />
+  </ItemGroup>
+
+</Project>

@@ -1,0 +1,12 @@
+{
+  "profiles": {
+    "Flow.Launcher.Plugin.ObsidianOmnisearch": {
+      "commandName": "Project"
+    },
+    "Open Flow Launcher": {
+      "commandName": "Executable",
+      "executablePath": "C:\\Users\\joaov\\AppData\\Local\\FlowLauncher\\app-1.16.2\\Flow.Launcher.exe",
+      "nativeDebugging": false
+    }
+  }
+}

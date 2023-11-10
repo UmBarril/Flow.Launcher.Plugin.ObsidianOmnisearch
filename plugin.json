@@ -1,0 +1,12 @@
+{
+  "ID": "9FC93F934F9141EC904528C4BAC078F0",
+  "ActionKeyword": "os",
+  "Name": "Obsidian Omnisearch",
+  "Description": "Search Obsidian.md notes using the Omnisearch HTTP server",
+  "Author": "UmBarril",
+  "Version": "1.0.0",
+  "Language": "csharp",
+  "Website": "https://github.com/UmBarril/Flow.Launcher.Plugin.ObsidianOmnisearch",
+  "IcoPath": "Images/obsidian-icon.png",
+  "ExecuteFileName": "./bin/Debug/Flow.Launcher.Plugin.ObsidianOmnisearch.dll"
+}
