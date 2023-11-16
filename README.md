@@ -12,4 +12,4 @@ RECOMMENDED: Turn on Always Preview on Flow Launcher general settings
   - Install it through the [official plugin repository](https://obsidian.md/plugins?search=Omnisearch)
   - Go to Settings > Omnisearch > API Access Through HTTP > Enable the HTTP Server
 - #2 Install the Flow Launcher Obsidian Omnisearch Plugin
-  - Download the Latest Package and unzip it on '``%AppData%\FlowLauncher\Plugins``
+  - Download the Latest Package and unzip it on ``%AppData%\FlowLauncher\Plugins``
