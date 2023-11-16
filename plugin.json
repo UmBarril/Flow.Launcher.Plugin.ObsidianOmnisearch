@@ -4,7 +4,7 @@
   "Name": "Obsidian Omnisearch",
   "Description": "Search Obsidian.md notes using the Omnisearch HTTP server",
   "Author": "UmBarril",
-  "Version": "1.0.0",
+  "Version": "1.1.0",
   "Language": "csharp",
   "Website": "https://github.com/UmBarril/Flow.Launcher.Plugin.ObsidianOmnisearch",
   "IcoPath": "Images/favicon.ico",
