@@ -51,6 +51,11 @@ namespace Flow.Launcher.Plugin.ObsidianOmnisearch
         {
             _context = context;
             _settings = _context.API.LoadSettingJsonStorage<Settings>();
+
+            if (_settings.IsFirstTimeUser)
+            {
+                _context.API.ShowMsg("First time using Omnisearch?", "To use it, follow instructions in the plugin home page on Github.\nhttps://github.com/UmBarril/Flow.Launcher.Plugin.ObsidianOmnisearch");
+            }
             return Task.CompletedTask;
         }
         
@@ -66,18 +71,13 @@ namespace Flow.Launcher.Plugin.ObsidianOmnisearch
                 var content = await ObsidianQueryAsync(query.Search, token);
                 if (content.Count > 0)
                 {
+                    _settings.IsFirstTimeUser = false;
                     foreach (OmniResult result in content)
                     {
                         string description = HttpUtility.HtmlDecode(result.Excerpt.Replace("<br>", "\n"));
-
-                        //// Not working
-                        //Result.PreviewInfo newPreview = new()
-                        //{
-                        //    Description = description,
-                        //    IsMedia = false
-                        //};
                      
                         Lazy<UserControl> previewPanel = null;
+
                         if (_settings.IsCustomPreviewActive)
                         {
                             //dispaching to the main thread since it won't work otherwise
@@ -89,9 +89,8 @@ namespace Flow.Launcher.Plugin.ObsidianOmnisearch
                         results.Add(new()
                         {
                             Title = $"{result.Basename}",
-                            SubTitle = $"{result.Vault} / {result.Matches.Count} matches\nScore {result.Score}",
-                            IcoPath = @"Images\obsidian-icon.png",
-                            //Preview = newPreview,
+                            SubTitle = $"{result.Vault} / {result.Matches.Count} matches",
+                            IcoPath = @"Images/favicon.ico",
                             TitleHighlightData = _context.API.FuzzySearch(query.Search, result.Basename).MatchData,
                             PreviewPanel = previewPanel, // if null, it will show the default preview panel
                             Action = _ =>
@@ -99,9 +98,7 @@ namespace Flow.Launcher.Plugin.ObsidianOmnisearch
                                 _context.API.OpenAppUri($"obsidian://open?vault={result.Vault}&file={result.Path}");
                                 return true;
                             },
-#if DEBUG
                             Score = (int)result.Score
-#endif
                         });
                     }
                 }
@@ -117,22 +114,44 @@ namespace Flow.Launcher.Plugin.ObsidianOmnisearch
             catch(TaskCanceledException) { /* ignore */ }
             catch (HttpRequestException ex)
             {
-                results.Add(new()
+                if (!_settings.IsFirstTimeUser)
                 {
-                    Title = "Error: Obsidian is not running or the Omnisearch server is not enabled.",
-                    SubTitle = "Click to Open Obsidian",
-                    IcoPath = @"Images\obsidian-icon.png",
-                    Action = actionContext =>
+                    results.Add(new()
                     {
-                        if (actionContext.SpecialKeyState.CtrlPressed)
+                        Title = "Error: Obsidian is not running or the Omnisearch server is not enabled.",
+                        SubTitle = "Click To See How To Fix This",
+                        IcoPath = @"Images\obsidian-icon.png",
+                        Action = actionContext =>
                         {
-                            _context.API.CopyToClipboard(ex.Message);
+                            if (actionContext.SpecialKeyState.CtrlPressed)
+                            {
+                                _context.API.CopyToClipboard(ex.Message);
+                                return true;
+                            }
+                            _context.API.OpenUrl("https://github.com/UmBarril/Flow.Launcher.Plugin.ObsidianOmnisearch/blob/master/README.md");
                             return true;
                         }
-                        _context.API.OpenAppUri("obsidian://open");
-                        return true;
-                    }
-                });
+                    });
+                }
+                else
+                {
+                    results.Add(new()
+                    {
+                        Title = "Error: Obsidian is not running or the Omnisearch server is not enabled.",
+                        SubTitle = "Click to Open Obsidian",
+                        IcoPath = @"Images\obsidian-icon.png",
+                        Action = actionContext =>
+                        {
+                            if (actionContext.SpecialKeyState.CtrlPressed)
+                            {
+                                _context.API.CopyToClipboard(ex.Message);
+                                return true;
+                            }
+                            _context.API.OpenAppUri("obsidian://open");
+                            return true;
+                        }
+                    });
+                }
             }
             
             return results;
@@ -141,7 +160,7 @@ namespace Flow.Launcher.Plugin.ObsidianOmnisearch
         private async Task<List<OmniResult>> ObsidianQueryAsync(string searchQuery, CancellationToken token)
         {
             using HttpClient client = new();
-            client.Timeout = TimeSpan.FromSeconds(20); // change default timeout
+            client.Timeout = TimeSpan.FromSeconds(5); // change default timeout
             client.BaseAddress = new Uri($"http://localhost:{_settings.Port}");
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
