@@ -7,6 +7,6 @@
   "Version": "1.0.0",
   "Language": "csharp",
   "Website": "https://github.com/UmBarril/Flow.Launcher.Plugin.ObsidianOmnisearch",
-  "IcoPath": "Images/obsidian-icon.png",
+  "IcoPath": "Images/favicon.ico",
   "ExecuteFileName": "./bin/Debug/Flow.Launcher.Plugin.ObsidianOmnisearch.dll"
 }
