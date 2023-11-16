@@ -12,29 +12,6 @@ using System.Windows.Controls;
 
 namespace Flow.Launcher.Plugin.ObsidianOmnisearch
 {
-    /// <summary>
-    /// A word match and where it starts on the note
-    /// </summary>
-    class OmniMatch
-    {
-        public string Match { get; set; }
-        public int Offset { get; set; }
-    }
-
-    /// <summary>
-    /// A result comming from the Omnisearch Plugin on Obsidian
-    /// </summary>
-    class OmniResult
-    {
-        public float Score { get; set; }
-        public string Vault { get; set; }
-        public string Path { get; set; }
-        public string Basename { get; set; }
-        public List<string> Foundwords { get; set; }
-        public List<OmniMatch> Matches { get; set; }
-        public string Excerpt { get; set; }
-    }
-
     // Probably doing this plugin work asyncronously isn't helping very much at all on performance or anything.
     // But since I started like this I'll keep this way for now.
     public class ObsidianOmnisearch : IAsyncPlugin, ISettingProvider
@@ -74,7 +51,6 @@ namespace Flow.Launcher.Plugin.ObsidianOmnisearch
                     _settings.IsFirstTimeUser = false;
                     foreach (OmniResult result in content)
                     {
-                        string description = HttpUtility.HtmlDecode(result.Excerpt.Replace("<br>", "\n"));
                      
                         Lazy<UserControl> previewPanel = null;
 
@@ -83,7 +59,7 @@ namespace Flow.Launcher.Plugin.ObsidianOmnisearch
                             //dispaching to the main thread since it won't work otherwise
                             previewPanel = Application.Current.Dispatcher.Invoke(delegate
                             {
-                                return new Lazy<UserControl>(new PreviewPanel(description, _settings.PreviewFontSize));
+                                return new Lazy<UserControl>(new PreviewPanel(result, _settings.PreviewFontSize));
                             });
                         }
                         results.Add(new()
@@ -168,5 +144,28 @@ namespace Flow.Launcher.Plugin.ObsidianOmnisearch
             var data = await json.Content.ReadFromJsonAsync<List<OmniResult>>(cancellationToken: token);
             return data;
         }
+    }
+
+    /// <summary>
+    /// A word match and where it starts on the note
+    /// </summary>
+    public class OmniMatch
+    {
+        public string Match { get; set; }
+        public int Offset { get; set; }
+    }
+
+    /// <summary>
+    /// A result comming from the Omnisearch Plugin on Obsidian
+    /// </summary>
+    public class OmniResult
+    {
+        public float Score { get; set; }
+        public string Vault { get; set; }
+        public string Path { get; set; }
+        public string Basename { get; set; }
+        public List<string> Foundwords { get; set; }
+        public List<OmniMatch> Matches { get; set; }
+        public string Excerpt { get; set; }
     }
 }
